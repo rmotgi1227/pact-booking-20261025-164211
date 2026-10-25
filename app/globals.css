@@ -146,6 +146,12 @@ button {
   width: 100%;
 }
 
+@media (min-width: 768px) {
+  .results-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
 @media (min-width: 1280px) {
   .results-grid {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
