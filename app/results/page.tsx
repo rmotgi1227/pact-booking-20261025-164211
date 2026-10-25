@@ -1,5 +1,6 @@
 import { Header } from '../components/Header';
 import { ResultCard } from '../components/ResultCard';
+import { ResultsGrid } from '../components/ResultsGrid';
 import { getSlots } from '../../lib/slots';
 import { searchVehicles } from '../../data/vehicles';
 
@@ -10,27 +11,20 @@ export default async function ResultsPage({
 }) {
   const slots = getSlots();
   const { carClass } = await searchParams;
-  const results = [...searchVehicles(carClass)].sort((a, b) => a.dailyPrice - b.dailyPrice);
+  const results = searchVehicles(carClass);
 
   return (
     <main className="page">
-      <Header />
-      <div className="results-header">
-        <h1>{slots.screens.results.heading}</h1>
-        {results.length > 0 && (
-          <p className="results-meta">
-            {results.length} {results.length === 1 ? 'car' : 'cars'} available &middot; sorted by price, low to high
-          </p>
-        )}
-      </div>
+      <Header title={slots.title} />
+      <h1>{slots.screens.results.heading}</h1>
       {results.length === 0 ? (
         <p className="empty-state">No cars match that search. Try a different class or date range.</p>
       ) : (
-        <div className="results-grid" data-testid="results-grid" data-tablet-dense={slots.showTabletLayout}>
+        <ResultsGrid dense={slots.showTabletLayout}>
           {results.map((vehicle) => (
             <ResultCard key={vehicle.id} vehicle={vehicle} bookCta={slots.screens.book.cta} />
           ))}
-        </div>
+        </ResultsGrid>
       )}
     </main>
   );
