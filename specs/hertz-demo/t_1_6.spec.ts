@@ -1,0 +1,8 @@
+import { test, expect } from '@playwright/test';
+import { open, search, firstRowCount, expectFirstRowAtLeast, expectNoHorizontalOverflow, atViewports, bookFirstCar, switchBrand } from '../pact';
+
+test('§1.6 reservation confirmation shows confirmation number', async ({ page }) => {
+  await search(page);
+  await bookFirstCar(page);
+  await expect(page.getByTestId('confirmation-banner')).toBeVisible();
+});
